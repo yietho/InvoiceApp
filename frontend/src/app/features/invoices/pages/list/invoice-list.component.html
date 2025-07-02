@@ -1,0 +1,51 @@
+<h2>Faturalar</h2>
+<button (click)="goToCreate()">+ Yeni Fatura Ekle</button>
+
+<!-- Tarih filtreleri -->
+<div>
+  <label>
+    Başlangıç Tarihi:
+    <input type="date" [(ngModel)]="startDate" />
+  </label>
+
+  <label style="margin-left: 20px;">
+    Bitiş Tarihi:
+    <input type="date" [(ngModel)]="endDate" />
+  </label>
+
+  <button (click)="loadInvoices()">Faturaları Yükle</button>
+</div>
+
+<hr />
+
+<!-- Fatura Listesi -->
+<ul *ngIf="invoices.length; else noInvoices">
+  <li *ngFor="let invoice of invoices" style="margin-bottom: 1rem;">
+    <strong>Fatura No:</strong> {{ invoice.invoiceNumber }} <br />
+    <strong>Tarih:</strong> {{ invoice.invoiceDate | date:'short' }} <br />
+    <strong>Tutar:</strong> {{ invoice.totalAmount | number:'1.2-2' }} ₺ <br />
+
+    <!-- Butonlar (Sadece kendi faturasıysa) -->
+    <div *ngIf="canEditOrDelete(invoice)" style="margin-top: 0.5rem;">
+      <button (click)="goToEdit(invoice.invoiceId)">Düzenle</button>
+      <button (click)="deleteInvoice(invoice.invoiceId)">Sil</button>
+    </div>
+
+    <!-- Fatura Satırları -->
+    <div *ngIf="invoice.lines?.length > 0" style="margin-top: 0.5rem;">
+      <ul>
+        <li *ngFor="let line of invoice.lines">
+          - {{ line.itemName || '(Boş Ürün)' }} |
+          {{ line.quentity }} adet |
+          {{ line.price | number:'1.2-2' }} ₺
+        </li>
+      </ul>
+    </div>
+    <hr />
+  </li>
+</ul>
+
+<!-- Fatura yoksa -->
+<ng-template #noInvoices>
+  <p>Hiç Fatura yüklenmedi!</p>
+</ng-template>

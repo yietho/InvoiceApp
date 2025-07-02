@@ -1,0 +1,42 @@
+<h2>Fatura Güncelle</h2>
+
+<form (ngSubmit)="submit()">
+  <label>
+    Fatura No:
+    <input type="text" [(ngModel)]="invoice.invoiceNumber" name="invoiceNumber" required />
+  </label>
+  <br />
+
+  <label>
+    Fatura Tarihi:
+    <input type="date" [(ngModel)]="invoice.invoiceDate" name="invoiceDate" required />
+  </label>
+
+  <hr />
+
+  <h3>Ürünler</h3>
+  <div *ngFor="let line of invoice.lines; let i = index">
+    <label>
+      Ürün:
+      <input type="text" [(ngModel)]="line.itemName" [name]="'itemName' + i" required />
+    </label>
+
+    <label>
+      Adet:
+      <input type="number" [(ngModel)]="line.quentity" [name]="'quentity' + i" required />
+    </label>
+
+    <label>
+      Tutar:
+      <input type="number" [(ngModel)]="line.price" [name]="'price' + i" required />
+    </label>
+
+    <button type="button" (click)="removeLine(i)" *ngIf="invoice.lines.length > 1">Sil</button>
+    <br /><br />
+  </div>
+
+  <button type="button" (click)="addLine()">+ Yeni Ürün</button>
+  <br /><br />
+
+  <button type="submit">Faturayı Güncelle</button>
+</form>
