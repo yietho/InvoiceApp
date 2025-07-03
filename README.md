@@ -83,16 +83,16 @@ CREATE DATABASE InvoiceAppDb;
 
 #### Kurulum ve Başlatma
 
----
+
 cd frontend/
 npm install
 ng serve
----
+
 
 ## Login Ekranı
 
 Giriş yaptıktan sonra faturalar listelenir.
----
+
 
 ##  Geliştirici Notları
 
